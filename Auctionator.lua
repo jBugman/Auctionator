@@ -3060,10 +3060,8 @@ function Atr_UpdateUI_SellPane (needsUpdate)
       Atr_StartingPriceDiscountText:SetText (ZT("Starting Price Discount")..":  "..AUCTIONATOR_SAVEDVARS.STARTING_DISCOUNT.."%");
 
       if (Atr_Batch_NumAuctions:GetNumber() < 2) then
-        Atr_Batch_Stacksize_Text:SetText (ZT("stack of"));
         Atr_CreateAuctionButton:SetText (ZT("Create Auction"));
       else
-        Atr_Batch_Stacksize_Text:SetText (ZT("stacks of"));
         Atr_CreateAuctionButton:SetText (string.format (ZT("Create %d Auctions"), Atr_Batch_NumAuctions:GetNumber()));
       end
 

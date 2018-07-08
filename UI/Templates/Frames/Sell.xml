@@ -370,35 +370,87 @@
             </Scripts>
           </EditBox>
 
-          <Button name="Atr_MaxAuctionsButton" inherits="UIPanelButtonTemplate"  text="Max" disabled="true">
-            <Size><AbsDimension x="46" y="21"/>  </Size>
-              <Anchors>
-                <Anchor point="TOPLEFT" relativeTo="Atr_Batch_Stacksize_Text">
-                  <Offset><AbsDimension x="-42" y="15"/></Offset>
-                </Anchor>
-              </Anchors>
+          <Button text="x1" name="auctionator_stacks_of_one_button" inherits="UIPanelButtonTemplate" disabled="true">
+            <Size>
+              <AbsDimension x="30" y="20"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="Atr_Batch_Stacksize_Text">
+                <Offset><AbsDimension x="-42" y="16"/></Offset>
+              </Anchor>
+            </Anchors>
             <Scripts>
               <OnClick>
-                Atr_MaxNumAuctions_OnClick()
+                auctionator_max_stacks_of(1)
               </OnClick>
             </Scripts>
           </Button>
 
-          <Button name="Atr_MaxStacksButton" inherits="UIPanelButtonTemplate"  text="Max" disabled="true">
-            <Size><AbsDimension x="46" y="21"/>  </Size>
-              <Anchors>
-                <Anchor point="TOPLEFT" relativeTo="Atr_Batch_Stacksize_Text">
-                  <Offset><AbsDimension x="79" y="15"/></Offset>
-                </Anchor>
-              </Anchors>
+          <Button text="x5" name="auctionator_stacks_of_five_button" inherits="UIPanelButtonTemplate" disabled="true">
+            <Size>
+              <AbsDimension x="30" y="20"/>
+            </Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="auctionator_stacks_of_one_button">
+                <Offset><AbsDimension x="33"/></Offset>
+              </Anchor>
+            </Anchors>
             <Scripts>
               <OnClick>
-                Atr_MaxNumStacks_OnClick()
+                auctionator_max_stacks_of(5)
               </OnClick>
             </Scripts>
           </Button>
 
-          <Button name="Atr_CreateAuctionButton" inherits="UIPanelButtonTemplate"  text="Create Auction" disabled="true">
+          <Button text="x20" name="auctionator_stacks_of_twenty_button" inherits="UIPanelButtonTemplate" disabled="true">
+            <Size>
+              <AbsDimension x="30" y="20"/>
+            </Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="auctionator_stacks_of_five_button">
+                <Offset><AbsDimension x="33"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnClick>
+                auctionator_max_stacks_of(20)
+              </OnClick>
+            </Scripts>
+          </Button>
+
+          <Button text="x50" name="auctionator_stacks_of_fifty_button" inherits="UIPanelButtonTemplate" disabled="true">
+            <Size>
+              <AbsDimension x="30" y="20"/>
+            </Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="auctionator_stacks_of_twenty_button">
+                <Offset><AbsDimension x="33"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnClick>
+                auctionator_max_stacks_of(50)
+              </OnClick>
+            </Scripts>
+          </Button>
+
+          <Button text="max" name="auctionator_max_stacks_button" inherits="UIPanelButtonTemplate" disabled="true">
+            <Size>
+              <AbsDimension x="35" y="20"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="Atr_Batch_Stacksize_Text">
+                <Offset><AbsDimension x="90" y="16"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnClick>
+                auctionator_max_stacks_of('max')
+              </OnClick>
+            </Scripts>
+          </Button>
+
+          <Button name="Atr_CreateAuctionButton" inherits="UIPanelButtonTemplate" text="Create Auction" disabled="true">
             <Size><AbsDimension x="185" y="30"/>  </Size>
               <Anchors>
                 <Anchor point="TOPLEFT"><Offset><AbsDimension x="5" y="-153"/></Offset></Anchor>
@@ -406,65 +458,6 @@
             <Scripts>
               <OnClick>
                 Atr_CreateAuction_OnClick()
-              </OnClick>
-            </Scripts>
-          </Button>
-
-
-          <Button name="Atr_SetMaxItems" inherits="UIPanelButtonTemplate"  text="MAX" disabled="true">
-            <Size><AbsDimension x="40" y="20"/>  </Size>
-            <Anchors>
-              <Anchor point="TOPLEFT"><Offset><AbsDimension x="140" y="-190"/></Offset></Anchor>
-            </Anchors>
-            <Scripts>
-              <OnClick>
-                max_stacksize = select(8,GetAuctionSellItemInfo())
-                items_owned = select(9,GetAuctionSellItemInfo())
-                calculated_stacksize = math.floor( items_owned / Atr_Batch_NumAuctions:GetText())
-                to_set_stacksize = calculated_stacksize
-
-                if calculated_stacksize > max_stacksize then
-                 to_set_stacksize = max_stacksize
-                end
-
-                Atr_Batch_Stacksize:SetText(to_set_stacksize)
-              </OnClick>
-            </Scripts>
-          </Button>
-
-          <Button name="Atr_SellBigStack" inherits="UIPanelButtonTemplate"  text="Sell BIG stack" disabled="true">
-            <Size><AbsDimension x="100" y="20"/>  </Size>
-            <Anchors>
-              <Anchor point="TOPLEFT"><Offset><AbsDimension x="12" y="-190"/></Offset></Anchor>
-            </Anchors>
-            <Scripts>
-              <OnClick>
-                max_stacksize = select(8,GetAuctionSellItemInfo())
-                item_amount = select(9,GetAuctionSellItemInfo())
-                num_stacks = math.floor(item_amount/max_stacksize)
-
-                set_stack_to = 1
-                set_items_to = item_amount
-                if num_stacks > 1 then
-                  set_items_to = max_stacksize
-                  set_stack_to = num_stacks
-                end
-
-                Atr_Batch_NumAuctions:SetText(set_stack_to)
-                Atr_Batch_Stacksize:SetText(set_items_to)
-              </OnClick>
-            </Scripts>
-          </Button>
-
-          <Button name="Atr_SellStacksOfOne" inherits="UIPanelButtonTemplate"  text="Sell stacks of 1" disabled="true">
-            <Size><AbsDimension x="100" y="20"/>  </Size>
-            <Anchors>
-              <Anchor point="TOPLEFT"><Offset><AbsDimension x="12" y="-240"/></Offset></Anchor>
-            </Anchors>
-            <Scripts>
-              <OnClick>
-                Atr_Batch_NumAuctions:SetText(select(9,GetAuctionSellItemInfo()))
-                Atr_Batch_Stacksize:SetText(1)
               </OnClick>
             </Scripts>
           </Button>

@@ -1408,30 +1408,6 @@ end
 
 -----------------------------------------
 
-function Atr_SetNumAuctions (n)
-  Auctionator.Debug.Message( 'Atr_SetNumAuctions', n )
-
-  return Atr_Batch_NumAuctions:SetText(n);
-end
-
------------------------------------------
-
-function Atr_GetNumAuctions ()
-  Auctionator.Debug.Message( 'Atr_GetNumAuctions' )
-
-  return Atr_Batch_NumAuctions:GetNumber();
-end
-
------------------------------------------
-
-function Atr_GetStackSize ()
-  Auctionator.Debug.Message( 'Atr_GetStackSize' )
-
-  return Atr_Batch_Stacksize:GetNumber();
-end
-
------------------------------------------
-
 function Atr_SelectPane (whichTab)
   Auctionator.Debug.Message( 'Atr_SelectPane', whichTab )
 
@@ -2586,30 +2562,22 @@ end
 
 -----------------------------------------
 
-function Atr_MaxNumAuctions_OnClick()
-  Auctionator.Debug.Message( 'Atr_MaxNumAuctions_OnClick' )
+function auctionator_max_stacks_of(wanted_stack_size)
+  local max_stack_size = select(8, GetAuctionSellItemInfo())
+  local total_count = select(9, GetAuctionSellItemInfo())
 
-  local maxAuctions = 0;
-  
-  if (gCurrentPane.totalItems > 0) then
-    maxAuctions = math.floor(gCurrentPane.totalItems / Atr_GetStackSize());
+  local stack_size = 0
+  if wanted_stack_size == 'max' then
+    stack_size = max_stack_size
+  else
+    stack_size = math.min(wanted_stack_size, max_stack_size)
   end
+  stack_size = math.min(total_count, stack_size)
 
-  Atr_SetNumAuctions(maxAuctions);
-end
+  local num_stacks = math.floor(total_count / stack_size)
 
------------------------------------------
-
-function Atr_MaxNumStacks_OnClick()
-  Auctionator.Debug.Message( 'Atr_MaxNumStacks_OnClick' )
-  
-  local maxStacks = 0;
-
-  if (gCurrentPane.totalItems > 0) then
-    maxStacks = math.floor(gCurrentPane.totalItems / Atr_GetNumAuctions());
-  end
-
-  Atr_SetStackSize(maxStacks);
+  Atr_Batch_NumAuctions:SetText(num_stacks)
+  Atr_Batch_Stacksize:SetText(stack_size)
 end
 
 -----------------------------------------

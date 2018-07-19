@@ -341,7 +341,7 @@
                 </Size>
                 <Anchors>
                   <Anchor point="TOPLEFT" relativePoint="TOPLEFT">
-                    <Offset><AbsDimension x="5" y="-1"/></Offset>
+                    <Offset><AbsDimension x="1" y="-1"/></Offset>
                   </Anchor>
                 </Anchors>
                 <Scripts>
@@ -357,7 +357,7 @@
                 </Size>
                 <Anchors>
                   <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="auctionator_stacks_of_one_button">
-                    <Offset><AbsDimension x="4" y="0"/></Offset>
+                    <Offset><AbsDimension x="-1" y="0"/></Offset>
                   </Anchor>
                 </Anchors>
                 <Scripts>
@@ -367,13 +367,29 @@
                 </Scripts>
               </Button>
 
-              <Button text="x20" name="auctionator_stacks_of_twenty_button" inherits="UIPanelButtonTemplate" disabled="true">
+              <Button text="x10" name="auctionator_stacks_of_ten_button" inherits="UIPanelButtonTemplate" disabled="true">
                 <Size>
                   <AbsDimension x="30" y="20"/>
                 </Size>
                 <Anchors>
                   <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="auctionator_stacks_of_five_button">
-                    <Offset><AbsDimension x="4" y="0"/></Offset>
+                    <Offset><AbsDimension x="-1" y="0"/></Offset>
+                  </Anchor>
+                </Anchors>
+                <Scripts>
+                  <OnClick>
+                    auctionator_max_stacks_of(10)
+                  </OnClick>
+                </Scripts>
+              </Button>
+
+              <Button text="x20" name="auctionator_stacks_of_twenty_button" inherits="UIPanelButtonTemplate" disabled="true">
+                <Size>
+                  <AbsDimension x="28" y="20"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="auctionator_stacks_of_ten_button">
+                    <Offset><AbsDimension x="-1" y="0"/></Offset>
                   </Anchor>
                 </Anchors>
                 <Scripts>
@@ -389,7 +405,7 @@
                 </Size>
                 <Anchors>
                   <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="auctionator_stacks_of_twenty_button">
-                    <Offset><AbsDimension x="4" y="0"/></Offset>
+                    <Offset><AbsDimension x="-1" y="0"/></Offset>
                   </Anchor>
                 </Anchors>
                 <Scripts>
@@ -401,11 +417,11 @@
 
               <Button text="max" name="auctionator_max_stacks_button" inherits="UIPanelButtonTemplate" disabled="true">
                 <Size>
-                  <AbsDimension x="40" y="20"/>
+                  <AbsDimension x="38" y="20"/>
                 </Size>
                 <Anchors>
                   <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="auctionator_stacks_of_fifty_button">
-                    <Offset><AbsDimension x="4" y="0"/></Offset>
+                    <Offset><AbsDimension x="-1" y="0"/></Offset>
                   </Anchor>
                 </Anchors>
                 <Scripts>

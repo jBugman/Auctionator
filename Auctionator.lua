@@ -2926,7 +2926,7 @@ function Atr_OnNewAuctionUpdate()
     if (gJustPosted.ItemName == nil) then
       local item_link = Auctionator.ItemLink:new({ item_link = auctionLink })
 
-      local cacheHit = gSellPane:DoSearch (auctionItemName, item_link:IdString(), auctionLink, 20);
+      local cacheHit = gSellPane:DoSearch(auctionItemName, item_link:IdString(), auctionLink, 120)
 
       gSellPane.totalItems  = Atr_GetNumItemInBags (auctionLink);
       gSellPane.fullStackSize = auctionLink and (select (8, GetItemInfo (auctionLink))) or 0;

@@ -18,6 +18,7 @@ gAtrZC = addonTable.zc;   -- share with AuctionatorDev
 local recommendElements     = {};
 
 AUCTIONATOR_ENABLE_ALT    = 1;
+AUCTIONATOR_ENABLE_QUICK_SCAN = 1;
 AUCTIONATOR_SHOW_ST_PRICE = 0;
 AUCTIONATOR_SHOW_TIPS   = 1;
 AUCTIONATOR_DEF_DURATION  = "N";    -- none
@@ -700,7 +701,7 @@ end
 function Atr_InitScanDB()
   Auctionator.Debug.Message( 'Atr_InitScanDB' )
 
-  local realm_Faction = GetRealmName().."_"..UnitFactionGroup ("player");
+  local realm_Faction = GetRealmName();
 
   if (AUCTIONATOR_PRICE_DATABASE and AUCTIONATOR_PRICE_DATABASE["__dbversion"] == nil) then -- migrate version 1 to version 2
 
@@ -767,9 +768,23 @@ function Atr_InitScanDB()
     AUCTIONATOR_PRICE_DATABASE["__dbversion"] = 4;
   end
 
+  if (AUCTIONATOR_PRICE_DATABASE and AUCTIONATOR_PRICE_DATABASE["__dbversion"] == 4) then
+    for realm_fac, data in pairs (AUCTIONATOR_PRICE_DATABASE) do
+        zc.md ("migrating Auctionator db to version 5 for:", realm_fac);
+        if realm_fac:find("_Alliance") ~= nil then
+            AUCTIONATOR_PRICE_DATABASE[realm_fac:gsub("_Alliance", "")] = AUCTIONATOR_PRICE_DATABASE[realm_fac]
+            AUCTIONATOR_PRICE_DATABASE[realm_fac] = nil
+        end
+        if realm_fac:find("_Horde") ~= nil then
+            AUCTIONATOR_PRICE_DATABASE[realm_fac:gsub("_Horde", "")] = AUCTIONATOR_PRICE_DATABASE[realm_fac]
+            AUCTIONATOR_PRICE_DATABASE[realm_fac] = nil
+        end
+    end
+    AUCTIONATOR_PRICE_DATABASE["__dbversion"] = 5;
+  end
   if (AUCTIONATOR_PRICE_DATABASE == nil) then
     AUCTIONATOR_PRICE_DATABASE = {};
-    AUCTIONATOR_PRICE_DATABASE["__dbversion"] = 4;
+    AUCTIONATOR_PRICE_DATABASE["__dbversion"] = 5;
   end
 
   if (AUCTIONATOR_PRICE_DATABASE[realm_Faction] == nil) then
@@ -1551,9 +1566,6 @@ function Atr_ContainerFrameItemButton_OnModifiedClick (self, button)
 
   return auctionator_orig_ContainerFrameItemButton_OnModifiedClick (self, button);
 end
-
-
-
 
 -----------------------------------------
 
@@ -2564,6 +2576,26 @@ end
 
 -----------------------------------------
 
+function auctionator_max_stacks_of(wanted_stack_size)
+  local max_stack_size = select(8, GetAuctionSellItemInfo())
+  local total_count = select(9, GetAuctionSellItemInfo())
+
+  local stack_size = 0
+  if wanted_stack_size == 'max' then
+    stack_size = max_stack_size
+  else
+    stack_size = math.min(wanted_stack_size, max_stack_size)
+  end
+  stack_size = math.min(total_count, stack_size)
+
+  local num_stacks = math.floor(total_count / stack_size)
+
+  Atr_Batch_NumAuctions:SetText(num_stacks)
+  Atr_Batch_Stacksize:SetText(stack_size)
+end
+
+-----------------------------------------
+
 local gABPIC_Previous = nil;    -- performance
 
 -----------------------------------------
@@ -2896,7 +2928,7 @@ function Atr_OnNewAuctionUpdate()
     if (gJustPosted.ItemName == nil) then
       local item_link = Auctionator.ItemLink:new({ item_link = auctionLink })
 
-      local cacheHit = gSellPane:DoSearch (auctionItemName, item_link:IdString(), auctionLink, 20);
+      local cacheHit = gSellPane:DoSearch(auctionItemName, item_link:IdString(), auctionLink, 120)
 
       gSellPane.totalItems  = Atr_GetNumItemInBags (auctionLink);
       gSellPane.fullStackSize = auctionLink and (select (8, GetItemInfo (auctionLink))) or 0;
@@ -3042,10 +3074,8 @@ function Atr_UpdateUI_SellPane (needsUpdate)
       Atr_StartingPriceDiscountText:SetText (ZT("Starting Price Discount")..":  "..AUCTIONATOR_SAVEDVARS.STARTING_DISCOUNT.."%");
 
       if (Atr_Batch_NumAuctions:GetNumber() < 2) then
-        Atr_Batch_Stacksize_Text:SetText (ZT("stack of"));
         Atr_CreateAuctionButton:SetText (ZT("Create Auction"));
       else
-        Atr_Batch_Stacksize_Text:SetText (ZT("stacks of"));
         Atr_CreateAuctionButton:SetText (string.format (ZT("Create %d Auctions"), Atr_Batch_NumAuctions:GetNumber()));
       end
 

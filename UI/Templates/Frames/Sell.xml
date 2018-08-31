@@ -240,19 +240,6 @@
               <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-118"/></Offset></Anchor></Anchors>
             </FontString>
 
-            <FontString name="Atr_Batch_Stacksize_Text" inherits="GameFontNormal" text="stacks of" justifyH="CENTER">
-              <Size><AbsDimension x="82" y="22"/></Size>
-              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="55" y="-208"/></Offset></Anchor></Anchors>
-            </FontString>
-
-            <FontString name="Atr_Batch_MaxAuctions_Text" inherits="GameFontDarkGraySmall">
-              <Anchors><Anchor point="TOPLEFT" relativeTo="Atr_Batch_Stacksize_Text"><Offset><AbsDimension x="-34" y="-21"/></Offset></Anchor></Anchors>
-            </FontString>
-
-            <FontString name="Atr_Batch_MaxStacksize_Text" inherits="GameFontDarkGraySmall">
-              <Anchors><Anchor point="TOPLEFT" relativeTo="Atr_Batch_Stacksize_Text"><Offset><AbsDimension x="79" y="-21"/></Offset></Anchor></Anchors>
-            </FontString>
-
             <FontString name="Atr_StartingPriceText" inherits="GameFontHighlightSmall" text="Starting Price" hidden="true">
               <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="13" y="-260"/></Offset></Anchor></Anchors>
             </FontString>
@@ -301,6 +288,180 @@
             <HighlightTexture alphaMode="ADD" file="Interface\Buttons\ButtonHilight-Square"/>
           </Button>
 
+          <Frame name="$parent_stack_settings">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+                <Offset><AbsDimension x="4" y="-194"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Size><AbsDimension x="187" y="52"/></Size>
+            <Layers>
+              <Layer>
+                <FontString text="Stacks" name="auctionator_num_stacks_text" inherits="GameFontNormal" justifyH="RIGHT">
+                  <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+                      <Offset><AbsDimension x="6" y="-22"/></Offset>
+                    </Anchor>
+                  </Anchors>
+                  <Size><AbsDimension x="40" y="20"/></Size>
+                </FontString>
+
+                <FontString text="Size" name="auctionator_stack_size_text" inherits="GameFontNormal" justifyH="RIGHT">
+                  <Anchors>
+                    <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="auctionator_num_stacks_text">
+                      <Offset><AbsDimension x="50" y="0"/></Offset>
+                    </Anchor>
+                  </Anchors>
+                  <Size><AbsDimension x="38" y="20"/></Size>
+                </FontString>
+
+                <FontString name="Atr_Batch_MaxAuctions_Text" inherits="GameFontDarkGraySmall">
+                  <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="BOTTOMRIGHT" relativeTo="auctionator_num_stacks_text">
+                      <Offset><AbsDimension x="5" y="4"/></Offset>
+                    </Anchor>
+                  </Anchors>
+                  <Size><AbsDimension x="40" y="15"/></Size>
+                </FontString>
+
+                <FontString name="Atr_Batch_MaxStacksize_Text" inherits="GameFontDarkGraySmall">
+                  <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="BOTTOMRIGHT" relativeTo="auctionator_stack_size_text">
+                      <Offset><AbsDimension x="5" y="4"/></Offset>
+                    </Anchor>
+                  </Anchors>
+                  <Size><AbsDimension x="40" y="15"/></Size>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Frames>
+              <Button text="x1" name="auctionator_stacks_of_one_button" inherits="UIPanelButtonTemplate" disabled="true">
+                <Size>
+                  <AbsDimension x="30" y="20"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+                    <Offset><AbsDimension x="1" y="-1"/></Offset>
+                  </Anchor>
+                </Anchors>
+                <Scripts>
+                  <OnClick>
+                    auctionator_max_stacks_of(1)
+                  </OnClick>
+                </Scripts>
+              </Button>
+
+              <Button text="x5" name="auctionator_stacks_of_five_button" inherits="UIPanelButtonTemplate" disabled="true">
+                <Size>
+                  <AbsDimension x="30" y="20"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="auctionator_stacks_of_one_button">
+                    <Offset><AbsDimension x="-1" y="0"/></Offset>
+                  </Anchor>
+                </Anchors>
+                <Scripts>
+                  <OnClick>
+                    auctionator_max_stacks_of(5)
+                  </OnClick>
+                </Scripts>
+              </Button>
+
+              <Button text="x10" name="auctionator_stacks_of_ten_button" inherits="UIPanelButtonTemplate" disabled="true">
+                <Size>
+                  <AbsDimension x="30" y="20"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="auctionator_stacks_of_five_button">
+                    <Offset><AbsDimension x="-1" y="0"/></Offset>
+                  </Anchor>
+                </Anchors>
+                <Scripts>
+                  <OnClick>
+                    auctionator_max_stacks_of(10)
+                  </OnClick>
+                </Scripts>
+              </Button>
+
+              <Button text="x20" name="auctionator_stacks_of_twenty_button" inherits="UIPanelButtonTemplate" disabled="true">
+                <Size>
+                  <AbsDimension x="28" y="20"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="auctionator_stacks_of_ten_button">
+                    <Offset><AbsDimension x="-1" y="0"/></Offset>
+                  </Anchor>
+                </Anchors>
+                <Scripts>
+                  <OnClick>
+                    auctionator_max_stacks_of(20)
+                  </OnClick>
+                </Scripts>
+              </Button>
+
+              <Button text="x50" name="auctionator_stacks_of_fifty_button" inherits="UIPanelButtonTemplate" disabled="true">
+                <Size>
+                  <AbsDimension x="30" y="20"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="auctionator_stacks_of_twenty_button">
+                    <Offset><AbsDimension x="-1" y="0"/></Offset>
+                  </Anchor>
+                </Anchors>
+                <Scripts>
+                  <OnClick>
+                    auctionator_max_stacks_of(50)
+                  </OnClick>
+                </Scripts>
+              </Button>
+
+              <Button text="max" name="auctionator_max_stacks_button" inherits="UIPanelButtonTemplate" disabled="true">
+                <Size>
+                  <AbsDimension x="38" y="20"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="auctionator_stacks_of_fifty_button">
+                    <Offset><AbsDimension x="-1" y="0"/></Offset>
+                  </Anchor>
+                </Anchors>
+                <Scripts>
+                  <OnClick>
+                    auctionator_max_stacks_of('max')
+                  </OnClick>
+                </Scripts>
+              </Button>
+
+              <EditBox name="Atr_Batch_NumAuctions" autoFocus="false" numeric="true" inherits="InputBoxTemplate" bytes="64">
+                <Size><AbsDimension x="40" y="20"/></Size>
+                <Anchors>
+                  <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="auctionator_num_stacks_text">
+                    <Offset><AbsDimension x="7" y="0"/></Offset>
+                  </Anchor>
+                </Anchors>
+                <FontString inherits="ChatFontNormal" justifyH="CENTER" />
+                <Scripts>
+                  <OnTextChanged>Atr_NumAuctionsChangedFunc()</OnTextChanged>
+                  <OnTabPressed>Atr_Batch_Stacksize:SetFocus()</OnTabPressed>
+                </Scripts>
+              </EditBox>
+
+              <EditBox name="Atr_Batch_Stacksize" autoFocus="false" numeric="true" inherits="InputBoxTemplate" bytes="64">
+                <Size><AbsDimension x="40" y="20"/></Size>
+                <Anchors>
+                  <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="auctionator_stack_size_text">
+                    <Offset><AbsDimension x="7" y="0"/></Offset>
+                  </Anchor>
+                </Anchors>
+                <FontString inherits="ChatFontNormal" justifyH="CENTER" />
+                <Scripts>
+                  <OnTextChanged>Atr_StackSizeChangedFunc()</OnTextChanged>
+                  <OnTabPressed>Atr_Batch_NumAuctions:SetFocus()</OnTabPressed>
+                </Scripts>
+              </EditBox>
+
+            </Frames>
+          </Frame>
+
           <Frame name="Atr_StackPrice" inherits="MoneyInputFrameTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="Atr_StackPriceText" relativePoint="BOTTOMLEFT">
@@ -341,34 +502,6 @@
               </OnLoad>
             </Scripts>
           </Frame>
-
-          <EditBox name="Atr_Batch_NumAuctions" autoFocus="false" numeric="true" inherits="InputBoxTemplate" bytes="64">
-            <Size><AbsDimension x="40" y="20"/></Size>
-            <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="Atr_Batch_Stacksize_Text">
-                <Offset><AbsDimension x="-37" y="0"/></Offset>
-              </Anchor>
-            </Anchors>
-            <FontString inherits="ChatFontNormal"  justifyH="CENTER" />
-            <Scripts>
-              <OnTextChanged>Atr_NumAuctionsChangedFunc()</OnTextChanged>
-              <OnTabPressed>Atr_Batch_Stacksize:SetFocus()</OnTabPressed>
-            </Scripts>
-          </EditBox>
-
-          <EditBox name="Atr_Batch_Stacksize" autoFocus="false" numeric="true" inherits="InputBoxTemplate" bytes="64">
-            <Size><AbsDimension x="40" y="20"/></Size>
-            <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="Atr_Batch_Stacksize_Text">
-                <Offset><AbsDimension x="84" y="0"/></Offset>
-              </Anchor>
-            </Anchors>
-            <FontString inherits="ChatFontNormal"  justifyH="CENTER" />
-            <Scripts>
-              <OnTextChanged>Atr_StackSizeChangedFunc()</OnTextChanged>
-              <OnTabPressed>Atr_Batch_NumAuctions:SetFocus()</OnTabPressed>
-            </Scripts>
-          </EditBox>
 
           <Button name="Atr_CreateAuctionButton" inherits="UIPanelButtonTemplate"  text="Create Auction" disabled="true">
             <Size><AbsDimension x="185" y="30"/>  </Size>

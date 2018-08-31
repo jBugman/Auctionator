@@ -47,9 +47,7 @@
         </Layers>
 
         <Frames>
-
-
-          <EditBox name="Atr_Buy_Confirm_Numstacks" autoFocus="false" numeric="true" inherits="InputBoxTemplate" bytes="64">
+          <EditBox name="Atr_Buy_Confirm_Numstacks" autoFocus="false" bytes="64" numeric="true" inherits="InputBoxTemplate">
             <Size><AbsDimension x="40" y="20"/></Size>
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="Atr_Buy_Confirm_Text1">

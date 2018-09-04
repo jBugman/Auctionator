@@ -54,6 +54,17 @@ function Atr_BuildHints (itemName, itemLink)
     return results;
   end
 
+  -- TSM 4
+  if (TSMAPI_FOUR) then
+    local itemString = TSMAPI_FOUR.Item.ToItemString(itemLink)
+    -- 
+    local value = TSMAPI_FOUR.CustomPrice.GetItemPrice(itemString, 'DBMinBuyout')
+    Atr_AppendHint(results, value, ZT('TSM min buyout'))
+    --
+    local value = TSMAPI_FOUR.CustomPrice.GetItemPrice(itemString, 'DBMarket')
+    Atr_AppendHint(results, value, ZT('TSM market value'))
+  end
+
   -- The Undermine Journal
 
   if (TUJMarketInfo) then
@@ -62,73 +73,24 @@ function Atr_BuildHints (itemName, itemLink)
     local tujData = {}
     TUJMarketInfo (tonumber(id), tujData)
 
-    local rawStdDevServer = tujData['stddev']
-    local rawStdDevGlobal = tujData['globalStdDev']
+    -- local rawStdDevServer = tujData['stddev']
+    -- local rawStdDevGlobal = tujData['globalStdDev']
 
-    local stdDevServer = "???"
-    if (rawStdDevServer) then
-        stdDevServer = zc.priceToString (rawStdDevServer)
-    end
+    -- local stdDevServer = "???"
+    -- if (rawStdDevServer) then
+    --     stdDevServer = zc.priceToString (rawStdDevServer)
+    -- end
 
-    local stdDevGlobal = "???"
-    if (rawStdDevGlobal) then
-        stdDevGlobal = zc.priceToString (rawStdDevGlobal)
-    end
+    -- local stdDevGlobal = "???"
+    -- if (rawStdDevGlobal) then
+    --     stdDevGlobal = zc.priceToString (rawStdDevGlobal)
+    -- end
 
-    Atr_AppendHint (results, tujData['globalMean'], ZT("Undermine global avg (deviation: "..stdDevGlobal.." )"));
-    Atr_AppendHint (results, tujData['recent'], ZT("Undermine 3-day server avg"));
-    Atr_AppendHint (results, tujData['market'], ZT("Undermine 14-day server avg (deviation: "..stdDevServer.." )"));
-    Atr_AppendHint (results, tujData['globalMedian'], ZT("Undermine global median"));
-  end
-
-  -- Wowecon
-
-  if (Wowecon and Wowecon.API) then
-
-    local priceG, volG, priceS, volS;
-
-    if (itemLink) then
-      priceG, volG = Wowecon.API.GetAuctionPrice_ByLink (itemLink, Wowecon.API.GLOBAL_PRICE)
-      priceS, volS = Wowecon.API.GetAuctionPrice_ByLink (itemLink, Wowecon.API.SERVER_PRICE)
-    else
-      priceG, volG = Wowecon.API.GetAuctionPrice_ByName (itemName, Wowecon.API.GLOBAL_PRICE)
-      priceS, volS = Wowecon.API.GetAuctionPrice_ByName (itemName, Wowecon.API.SERVER_PRICE)
-    end
-
-    Atr_AppendHint (results, priceG, ZT("Wowecon global price"), volG);
-    Atr_AppendHint (results, priceS, ZT("Wowecon server price"), volS);
-
-  end
-
-  if (itemLink) then
-
-    -- GoingPrice Wowhead
-
-    local id = zc.RawItemIDfromLink (itemLink);
-
-    id = tonumber(id);
-
-    if (GoingPrice_Wowhead_Data and GoingPrice_Wowhead_Data[id] and GoingPrice_Wowhead_SV._index) then
-      local index = GoingPrice_Wowhead_SV._index["Buyout price"];
-
-      if (index ~= nil) then
-        local price = GoingPrice_Wowhead_Data[id][index];
-
-        Atr_AppendHint (results, price, "GoingPrice - Wowhead");
-      end
-    end
-
-    -- GoingPrice Allakhazam
-
-    if (GoingPrice_Allakhazam_Data and GoingPrice_Allakhazam_Data[id] and GoingPrice_Allakhazam_SV._index) then
-      local index = GoingPrice_Allakhazam_SV._index["Median"];
-
-      if (index ~= nil) then
-        local price = GoingPrice_Allakhazam_Data[id][index];
-
-        Atr_AppendHint (results, price, "GoingPrice - Allakhazam");
-      end
-    end
+    -- Atr_AppendHint (results, tujData['globalMean'], ZT("Undermine global avg (deviation: "..stdDevGlobal.." )"));
+    Atr_AppendHint (results, tujData['recent'], ZT("TUJ 3-day agv"));
+    Atr_AppendHint (results, tujData['market'], ZT("TUJ 14-day avg"));
+    -- Atr_AppendHint (results, tujData['market'], ZT("Undermine 14-day server avg (deviation: "..stdDevServer.." )"));
+    Atr_AppendHint (results, tujData['globalMedian'], ZT("TUJ global median"));
   end
 
   return results;
